@@ -24,18 +24,7 @@ resource "aws_db_subnet_group" "db-subnet" {
 
 
 
-# resource "aws_db_instance" "default" {
-#   allocated_storage    = 10
-#   engine               = "mysql"
-#   engine_version       = "5.7"
-#   instance_class       = "db.t3.micro"
-#   name                 = "mydb"
-#   username             = "devops"
-#   password             = "foobarbaz"
-#   skip_final_snapshot  = true
-#   db_subnet_group_name = aws_db_subnet_group.db-subnet.name
-#   security_group_names = ["${aws_security_group.rds-security-group.id}"]
-#  }
+
 
 
 
@@ -65,6 +54,7 @@ resource "aws_db_instance" "my-test-sql" {
   backup_window           = "09:46-10:16"
   db_subnet_group_name    = "${aws_db_subnet_group.db-subnet.name}"
   vpc_security_group_ids  = ["${aws_security_group.rds-security-group.id}"]
+
 
 
 }
