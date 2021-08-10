@@ -20,10 +20,10 @@ resource "aws_internet_gateway" "internet-gateway" {
 
 # Create Public Subnet 1
 # terraform aws create subnet
-resource "aws_subnet" "public-subnet-1" {
+resource "aws_subnet" "pubsubnet-1" {
   vpc_id                  = aws_vpc.terraform-vpc.id
-  cidr_block              = var.public-subnet-1-cidr
-  availability_zone       = "ap-south-1a"
+  cidr_block              = var.pubsubnet-1-cidr
+  availability_zone       = "us-east-2a"
   map_public_ip_on_launch = true
 
   tags = {
@@ -33,10 +33,10 @@ resource "aws_subnet" "public-subnet-1" {
 
 # Create Public Subnet 2
 # terraform aws create subnet
-resource "aws_subnet" "public-subnet-2" {
+resource "aws_subnet" "pubsubnet-2" {
   vpc_id                  = aws_vpc.terraform-vpc.id
-  cidr_block              = var.public-subnet-2-cidr
-  availability_zone       = "ap-south-1b"
+  cidr_block              = var.pubsubnet-2-cidr
+  availability_zone       = "us-east-2b"
   map_public_ip_on_launch = true
 
   tags = {
@@ -59,14 +59,14 @@ resource "aws_route_table" "public-route-table" {
 }
 # Associate Public Subnet 1 to "Public Route Table"
 # terraform aws associate subnet with route table
-resource "aws_route_table_association" "public-subnet-1-route-table-association" {
-  subnet_id      = aws_subnet.public-subnet-1.id
+resource "aws_route_table_association" "pubsubnet-1-route-table-association" {
+  subnet_id      = aws_subnet.pubsubnet-1.id
   route_table_id = aws_route_table.public-route-table.id
 }
 # Associate Public Subnet 2 to "Public Route Table"
 # terraform aws associate subnet with route table
-resource "aws_route_table_association" "public-subnet-2-route-table-association" {
-  subnet_id      = aws_subnet.public-subnet-2.id
+resource "aws_route_table_association" "pubsubnet-2-route-table-association" {
+  subnet_id      = aws_subnet.pubsubnet-2.id
   route_table_id = aws_route_table.public-route-table.id
 }
 
@@ -75,7 +75,7 @@ resource "aws_route_table_association" "public-subnet-2-route-table-association"
 resource "aws_subnet" "private-subnet-1" {
   vpc_id                  = aws_vpc.terraform-vpc.id
   cidr_block              = var.private-subnet-1-cidr
-  availability_zone       = "ap-south-1a"
+  availability_zone       = "us-east-2a"
   map_public_ip_on_launch = false
 
   tags = {
@@ -87,7 +87,7 @@ resource "aws_subnet" "private-subnet-1" {
 resource "aws_subnet" "private-subnet-2" {
   vpc_id                  = aws_vpc.terraform-vpc.id
   cidr_block              = var.private-subnet-2-cidr
-  availability_zone       = "ap-south-1b"
+  availability_zone       = "us-east-2b"
   map_public_ip_on_launch = false
 
   tags = {
@@ -99,7 +99,7 @@ resource "aws_subnet" "private-subnet-2" {
 resource "aws_subnet" "private-subnet-3" {
   vpc_id                  = aws_vpc.terraform-vpc.id
   cidr_block              = var.private-subnet-3-cidr
-  availability_zone       = "ap-south-1a"
+  availability_zone       = "us-east-2a"
   map_public_ip_on_launch = false
 
   tags = {
@@ -111,7 +111,7 @@ resource "aws_subnet" "private-subnet-3" {
 resource "aws_subnet" "private-subnet-4" {
   vpc_id                  = aws_vpc.terraform-vpc.id
   cidr_block              = var.private-subnet-4-cidr
-  availability_zone       = "ap-south-1b"
+  availability_zone       = "us-east-2b"
   map_public_ip_on_launch = false
 
   tags = {
@@ -126,7 +126,7 @@ resource "aws_eip" "ip" {
 }
 resource "aws_nat_gateway" "ngw" {
   allocation_id = aws_eip.ip.id
-  subnet_id     = aws_subnet.public-subnet-2.id
+  subnet_id     = aws_subnet.pubsubnet-2.id
 
   tags = {
     Name = "NGW"
